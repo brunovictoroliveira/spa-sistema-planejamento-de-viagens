@@ -1,0 +1,328 @@
+{
+  "regiao_sudeste": {
+    "Rio de Janeiro": [
+      {
+        "nome": "Cristo Redentor",
+        "municipio_regiao": "Rio de Janeiro (Capital)",
+        "tipo": "Monumento/Ponto Panorâmico",
+        "perfil_custo_atividade": "alto",
+        "publico_ideal": ["todos"]
+      },
+      {
+        "nome": "Bondinho do Pão de Açúcar",
+        "municipio_regiao": "Rio de Janeiro (Capital)",
+        "tipo": "Ponto Panorâmico/Teleférico",
+        "perfil_custo_atividade": "alto",
+        "publico_ideal": ["todos"]
+      },
+      {
+        "nome": "Praia de Copacabana",
+        "municipio_regiao": "Rio de Janeiro (Capital - Zona Sul)",
+        "tipo": "Litoral Urbano",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["todos"]
+      },
+      {
+        "nome": "Praia de Ipanema",
+        "municipio_regiao": "Rio de Janeiro (Capital - Zona Sul)",
+        "tipo": "Litoral Urbano",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["todos"]
+      },
+      {
+        "nome": "Praia do Arpoador",
+        "municipio_regiao": "Rio de Janeiro (Capital - Zona Sul)",
+        "tipo": "Litoral Urbano/Ponto Panorâmico",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["todos"]
+      },
+      {
+        "nome": "Praia do Leme",
+        "municipio_regiao": "Rio de Janeiro (Capital - Zona Sul)",
+        "tipo": "Litoral Urbano",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["familia", "casal"]
+      },
+      {
+        "nome": "Praia da Barra (Barra da Tijuca)",
+        "municipio_regiao": "Rio de Janeiro (Capital - Zona Oeste)",
+        "tipo": "Litoral Urbano/Surf",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["todos"]
+      },
+      {
+        "nome": "Praia do Recreio",
+        "municipio_regiao": "Rio de Janeiro (Capital - Zona Oeste)",
+        "tipo": "Litoral Urbano/Surf",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["familia", "amigos"]
+      },
+      {
+        "nome": "Santa Teresa e Glória (Escadaria Selarón, Bonde)",
+        "municipio_regiao": "Rio de Janeiro (Capital - Centro)",
+        "tipo": "Histórico/Cultural/Boêmio",
+        "perfil_custo_atividade": "baixo",
+        "publico_ideal": ["casal", "amigos", "sozinho"]
+      },
+      {
+        "nome": "Museu do Amanhã e Boulevard Olímpico",
+        "municipio_regiao": "Rio de Janeiro (Capital - Região Portuária)",
+        "tipo": "Cultural/Arquitetura Moderna",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["familia", "casal", "sozinho"]
+      },
+      {
+        "nome": "Centro Histórico de Paraty",
+        "municipio_regiao": "Paraty (Costa Verde/Sul Fluminense)",
+        "tipo": "Histórico/Ecoturismo",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["casal", "familia", "amigos"]
+      },
+      {
+        "nome": "Ilha Grande",
+        "municipio_regiao": "Angra dos Reis (Costa Verde)",
+        "tipo": "Ecoturismo/Praias Intocadas",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["casal", "amigos", "sozinho"]
+      },
+      {
+        "nome": "Cidades Imperiais (Petrópolis e Teresópolis)",
+        "municipio_regiao": "Serra Fluminense",
+        "tipo": "Histórico/Cultural/Serra",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["familia", "casal"]
+      },
+      {
+        "nome": "Praia do Farol (Arraial do Cabo)",
+        "municipio_regiao": "Arraial do Cabo (Região dos Lagos)",
+        "tipo": "Litoral/Praias de Águas Claras",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["casal", "amigos"]
+      },
+      {
+        "nome": "Rua das Pedras (Búzios)",
+        "municipio_regiao": "Armação dos Búzios (Região dos Lagos)",
+        "tipo": "Litoral/Gastronomia/Vida Noturna",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["casal", "amigos"]
+      }
+    ],
+    "São Paulo": [
+      {
+        "nome": "Avenida Paulista",
+        "municipio_regiao": "São Paulo (Capital)",
+        "tipo": "Cultural/Urbano/Financeiro",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["todos"]
+      },
+      {
+        "nome": "Parque Ibirapuera",
+        "municipio_regiao": "São Paulo (Capital)",
+        "tipo": "Lazer/Parque Urbano",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["todos"]
+      },
+      {
+        "nome": "Mercado Municipal de São Paulo (\"Mercadão\")",
+        "municipio_regiao": "São Paulo (Capital)",
+        "tipo": "Gastronômico/Histórico",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["todos"]
+      },
+      {
+        "nome": "Litoral Norte de São Paulo (Ubatuba, Maresias)",
+        "municipio_regiao": "Litoral Norte",
+        "tipo": "Litoral/Ecoturismo",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["familia", "amigos", "casal"]
+      },
+      {
+        "nome": "Campos do Jordão",
+        "municipio_regiao": "Serra da Mantiqueira",
+        "tipo": "Serra/Clima Frio/Arquitetura",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["casal", "familia"]
+      },
+      {
+        "nome": "Holambra",
+        "municipio_regiao": "Interior de SP",
+        "tipo": "Cultural/Campos de Flores",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["casal", "familia"]
+      },
+      {
+        "nome": "Santuário Nacional de Aparecida",
+        "municipio_regiao": "Aparecida (Vale do Paraíba)",
+        "tipo": "Turismo Religioso",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["religioso", "familia"]
+      },
+      {
+        "nome": "Ilhabela",
+        "municipio_regiao": "Litoral Norte",
+        "tipo": "Litoral/Ecoturismo/Cachoeiras",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["casal", "amigos"]
+      },
+      {
+        "nome": "Paranapiacaba",
+        "municipio_regiao": "Santo André (Grande SP)",
+        "tipo": "Histórico/Arquitetura Inglesa",
+        "perfil_custo_atividade": "baixo",
+        "publico_ideal": ["casal", "amigos", "familia"]
+      },
+      {
+        "nome": "Circuito das Águas (Águas de Lindoia, Serra Negra)",
+        "municipio_regiao": "Interior de SP",
+        "tipo": "Águas Termais / Ecoturismo",
+        "perfil_custo_atividade": "baixo",
+        "publico_ideal": ["familia", "casal"]
+      }
+    ],
+    "Minas Gerais": [
+      {
+        "nome": "Praça da Liberdade",
+        "municipio_regiao": "Belo Horizonte (Capital)",
+        "tipo": "Cultural/Arquitetônico",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["todos"]
+      },
+      {
+        "nome": "Conjunto Arquitetônico da Pampulha",
+        "municipio_regiao": "Belo Horizonte (Capital)",
+        "tipo": "Patrimônio UNESCO/Arquitetônico",
+        "perfil_custo_atividade": "baixo",
+        "publico_ideal": ["todos"]
+      },
+      {
+        "nome": "Centro Histórico de Ouro Preto",
+        "municipio_regiao": "Ouro Preto (Cidades Históricas)",
+        "tipo": "Patrimônio UNESCO/Histórico Colonial",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["casal", "amigos", "sozinho"]
+      },
+      {
+        "nome": "Tiradentes",
+        "municipio_regiao": "Tiradentes (Campo das Vertentes)",
+        "tipo": "Histórico Colonial/Gastronômico",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["casal", "familia"]
+      },
+      {
+        "nome": "Serra da Canastra (Casca D'Anta)",
+        "municipio_regiao": "Região Sudoeste",
+        "tipo": "Ecoturismo/Cachoeiras",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["amigos", "casal"]
+      },
+      {
+        "nome": "Capitólio (Cânions de Furnas)",
+        "municipio_regiao": "Região Sudoeste / Lago de Furnas",
+        "tipo": "Ecoturismo / Náutico / Cânions",
+        "perfil_custo_atividade": "alto",
+        "publico_ideal": ["amigos", "casal"]
+      },
+      {
+        "nome": "Inhotim",
+        "municipio_regiao": "Brumadinho (Região Metropolitana de BH)",
+        "tipo": "Arte Contemporânea / Jardim Botânico",
+        "perfil_custo_atividade": "alto",
+        "publico_ideal": ["casal", "sozinho", "amigos"]
+      },
+      {
+        "nome": "Diamantina",
+        "municipio_regiao": "Vale do Jequitinhonha",
+        "tipo": "Patrimônio UNESCO / Histórico Colonial",
+        "perfil_custo_atividade": "baixo",
+        "publico_ideal": ["casal", "sozinho"]
+      },
+      {
+        "nome": "Parque Estadual do Ibitipoca",
+        "municipio_regiao": "Lima Duarte (Zona da Mata)",
+        "tipo": "Ecoturismo / Trilhas / Grutas",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["amigos", "casal", "sozinho"]
+      },
+      {
+        "nome": "São Tomé das Letras",
+        "municipio_regiao": "Sul de Minas",
+        "tipo": "Ecoturismo / Misticismo / Cachoeiras",
+        "perfil_custo_atividade": "baixo",
+        "publico_ideal": ["amigos", "sozinho"]
+      }
+    ],
+    "Espírito Santo": [
+      {
+        "nome": "Convento da Penha",
+        "municipio_regiao": "Vila Velha (Região Metropolitana de Vitória)",
+        "tipo": "Histórico / Religioso / Panorâmico",
+        "perfil_custo_atividade": "baixo",
+        "publico_ideal": ["todos", "religioso"]
+      },
+      {
+        "nome": "Guarapari",
+        "municipio_regiao": "Guarapari (Litoral Sul)",
+        "tipo": "Litoral / Praias",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["familia", "amigos"]
+      },
+      {
+        "nome": "Parque Nacional do Caparaó/Pico da Bandeira",
+        "municipio_regiao": "Serra do Caparaó (Divisa ES/MG)",
+        "tipo": "Ecoturismo / Montanhismo",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["amigos", "sozinho"]
+      },
+      {
+        "nome": "Pedra Azul",
+        "municipio_regiao": "Domingos Martins (Montanhas Capixabas)",
+        "tipo": "Serra / Ecoturismo / Clima Frio",
+        "perfil_custo_atividade": "medio",
+        "publico_ideal": ["casal", "familia"]
+      },
+      {
+        "nome": "Centro Histórico de Vitória e Ilha do Frade",
+        "municipio_regiao": "Vitória (Capital)",
+        "tipo": "Histórico / Litoral Urbano",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["casal", "sozinho"]
+      },
+      {
+        "nome": "Dunas de Itaúnas",
+        "municipio_regiao": "Conceição da Barra (Litoral Norte)",
+        "tipo": "Ecoturismo / Forró / Praias",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["amigos", "casal"]
+      },
+      {
+        "nome": "Região de Venda Nova do Imigrante",
+        "municipio_regiao": "Montanhas Capixabas",
+        "tipo": "Agroturismo / Gastronomia Italiana",
+        "perfil_custo_atividade": "baixo",
+        "publico_ideal": ["familia", "casal"]
+      },
+      {
+        "nome": "Mosteiro Zen Morro da Vargem",
+        "municipio_regiao": "Ibiraçu",
+        "tipo": "Turismo Religioso / Zen",
+        "perfil_custo_atividade": "baixo",
+        "publico_ideal": ["sozinho", "casal"]
+      },
+      {
+        "nome": "Praia de Iriri",
+        "municipio_regiao": "Anchieta (Litoral Sul)",
+        "tipo": "Litoral / Balneário",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["familia", "casal"]
+      },
+      {
+        "nome": "Morro do Moreno",
+        "municipio_regiao": "Vila Velha (Região Metropolitana de Vitória)",
+        "tipo": "Ecoturismo / Vista Panorâmica",
+        "perfil_custo_atividade": "gratuito",
+        "publico_ideal": ["amigos", "sozinho", "casal"]
+      }
+    ]
+  }
+}
+
