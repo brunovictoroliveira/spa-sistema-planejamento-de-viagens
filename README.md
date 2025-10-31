@@ -1,6 +1,6 @@
 # SPA - Sistema Especialista para Planejamento de Viagens (Sudeste)
 
-### Este projeto é um protótipo de um Sistema Especialista leve, desenvolvido como uma Single Page Application (SPA), focado no planejamento de viagens e estimativa de custos para a Região Sudeste do Brasil.
+Este projeto é um protótipo de um Sistema Especialista leve, desenvolvido como uma Single Page Application (SPA), focado no planejamento de viagens e estimativa de custos para a Região Sudeste do Brasil.
 
 A aplicação opera inteiramente no client-side (no navegador do usuário), sem a necessidade de um backend ou banco de dados externo, sendo ideal para hospedagem estática gratuita (como Firebase Hosting).
 
