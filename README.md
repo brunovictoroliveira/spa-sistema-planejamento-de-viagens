@@ -8,7 +8,7 @@ A aplicação opera inteiramente no client-side (no navegador do usuário), sem 
 
 A arquitetura do projeto simula um Sistema Especialista clássico, dividido em três componentes principais:
 
-## 1. Base de Conhecimento (Knowledge Base)
+### 1. Base de Conhecimento (Knowledge Base)
 
 Armazenada em arquivos estáticos (/src/data/).
 
@@ -16,13 +16,13 @@ dados.json: Contém os "fatos" sobre os destinos (cidades, locais), incluindo su
 
 transporteData.js: Contém a matriz de custos (regras heurísticas) para transporte interestadual.
 
-## 2. Motor de Inferência (Inference Engine)
+### 2. Motor de Inferência (Inference Engine)
 
 Localizado em /src/services/estimativaService.js.
 
 Este é o "cérebro" da aplicação. Ele contém as regras de negócio e a lógica heurística para calcular os custos (hospedagem, transporte, atividades) com base nos fatos coletados.
 
-## 3. Interface de Fatos (Fact Interface)
+### 3. Interface de Fatos (Fact Interface)
 
 Composta pelos componentes React (/src/components/), principalmente o Quiz.jsx.
 
