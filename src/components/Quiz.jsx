@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react'; // PASSO 1: Importar o useEffect
 // Importa os hubs de partida que criamos
 import { ORIGIN_HUBS } from '../data/transporteData';
 
@@ -73,6 +73,32 @@ function Quiz({ filters, setFilters }) {
     });
   };
 
+  // --- INÍCIO DA MODIFICAÇÃO ---
+  // PASSO 1: Lógica para corrigir o estado e alertar o usuário
+  useEffect(() => {
+    const numPessoas = parseInt(filters.people, 10);
+    const perfil = filters.companhia;
+
+    // Perfis que não podem ser selecionados se for 1 pessoa
+    const perfisDeGrupo = ['familia', 'amigos', 'religioso'];
+
+    if (numPessoas === 1 && perfisDeGrupo.includes(perfil)) {
+      // 1. Informa o usuário
+      alert("Perfil da Companhia ajustado. Não é possível selecionar perfis de grupo para apenas 1 pessoa.");
+
+      // 2. Corrige o estado
+      setFilters((prev) => ({
+        ...prev,
+        companhia: 'sozinho', // Define para o valor "sozinho"
+      }));
+    }
+  }, [filters.people, filters.companhia, setFilters]); // Observa mudanças nessas props
+
+  // Variável para desabilitar
+  const isSinglePerson = parseInt(filters.people, 10) === 1;
+  // --- FIM DA MODIFICAÇÃO ---
+
+
   // Fragmento React (<>) para evitar a div duplicada
   return (
     <>
@@ -139,6 +165,9 @@ function Quiz({ filters, setFilters }) {
           <option value="luxo">Luxo (Premium)</option>
         </select>
       </div>
+      
+      {/* --- INÍCIO DA MODIFICAÇÃO --- */}
+      {/* PASSO 2: Desabilitar as opções de grupo */}
       <div className="form-group">
         <label htmlFor="companhia">Perfil da Companhia</label>
         <select
@@ -150,11 +179,18 @@ function Quiz({ filters, setFilters }) {
           <option value="todos">Qualquer (Todos)</option>
           <option value="sozinho">Sozinho(a)</option>
           <option value="casal">Casal</option>
-          <option value="familia">Família</option>
-          <option value="amigos">Amigos</option>
-          <option value="religioso">Religioso</option>
+          <option value="familia" disabled={isSinglePerson}>
+            Família
+          </option>
+          <option value="amigos" disabled={isSinglePerson}>
+            Amigos
+          </option>
+          <option value="religioso" disabled={isSinglePerson}>
+            Religioso
+          </option>
         </select>
       </div>
+      {/* --- FIM DA MODIFICAÇÃO --- */}
 
       <hr />
 
@@ -198,4 +234,3 @@ function Quiz({ filters, setFilters }) {
 }
 
 export default Quiz;
-
