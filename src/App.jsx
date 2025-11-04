@@ -1,35 +1,76 @@
 import { useState, useEffect } from 'react';
-import { useLocalStorage } from './hooks/useLocalStorage';
+// Importa a logo do React para o rodapé
+import reactLogo from './assets/react.svg';
+// Importa as bases de conhecimento
 import jsonData from './data/dados.json';
+import { ORIGIN_HUBS } from './data/transporteData';
+// Importa os componentes da UI
 import Quiz from './components/Quiz';
 import Resultados from './components/Resultados';
-import { calcularCustosEstimados } from './services/estimativaService';
+// Importa o "cérebro"
+import { calcularCustosEstimados } from './services/estimativaService.js';
+// Importa os estilos
 import './App.css';
-// Importa a logo do React
-import reactLogo from './assets/react.svg';
 
-// Mapeamento dos interesses gerais para palavras-chave no JSON (RF-013 - Base de Regras)
+// Mapeamento dos interesses gerais para palavras-chave no JSON (Base de Regras)
 const interestMapping = {
-  'Praia/Litoral': ['Litoral', 'Praia', 'Balneário', 'Surf'],
-  'Ecoturismo/Aventura': ['Ecoturismo', 'Trilhas', 'Cachoeiras', 'Montanhismo', 'Grutas', 'Cânions', 'Parque', 'Náutico', 'Vista Panorâmica', 'Praias Intocadas'],
-  'Histórico/Cultural': ['Histórico', 'Cultural', 'Colonial', 'Patrimônio', 'Arquitetura Inglesa', 'Misticismo'],
+  'Praia/Litoral': ['Litoral', 'Praia', 'Balneário'],
+  'Ecoturismo/Aventura': [
+    'Ecoturismo',
+    'Trilhas',
+    'Cachoeiras',
+    'Montanhismo',
+    'Grutas',
+    'Cânions',
+    'Parque',
+    'Náutico',
+    'Vista Panorâmica',
+    'Surf',
+    'Praias Intocadas',
+  ],
+  'Histórico/Cultural': [
+    'Histórico',
+    'Cultural',
+    'Colonial',
+    'Patrimônio',
+    'Arquitetura Inglesa',
+    'Misticismo',
+    'Patrimônio UNESCO',
+    'Boêmio',
+  ],
   'Serra/Montanha': ['Serra', 'Clima Frio', 'Montanhas', 'Panorâmico', 'Montanhismo'],
-  'Gastronomia': ['Gastronomia', 'Gastronômico', 'Agroturismo'],
+  'Gastronomia': ['Gastronomia', 'Gastronômico', 'Agroturismo', 'Forró'],
   'Religioso': ['Religioso', 'Zen', 'Santuário'],
-  'Urbano/Lazer': ['Urbano', 'Parque Urbano', 'Lazer', 'Boêmio', 'Vida Noturna', 'Financeiro'],
-  'Arte/Arquitetura': ['Arquitetura', 'Arquitetônico', 'Arte', 'Monumento', 'Design', 'Patrimônio UNESCO', 'Arquitetura Moderna']
+  'Urbano/Lazer': [
+    'Urbano',
+    'Parque Urbano',
+    'Lazer',
+    'Boêmio',
+    'Vida Noturna',
+    'Financeiro',
+    'Litoral Urbano',
+  ],
+  'Arte/Arquitetura': [
+    'Arquitetura',
+    'Arquitetônico',
+    'Arte',
+    'Monumento',
+    'Design',
+    'Patrimônio UNESCO',
+    'Arquitetura Moderna',
+  ],
 };
 
-// Estado inicial para os filtros
+// Estado inicial padrão para os filtros (RF-002)
 const ESTADO_INICIAL_FILTROS = {
   states: [],
   interests: [],
-  duration: 1,
-  people: 1,
+  duration: 7,
+  people: 2,
   budget: 'conforto',
   startDate: new Date().toISOString().split('T')[0],
-  companhia: 'todos',
-  originState: 'RJ', // Estado de origem padrão
+  companhia: 'casal',
+  originState: 'SP',
 };
 
 // Custo inicial vazio
@@ -42,91 +83,127 @@ const CUSTO_INICIAL = {
 };
 
 function App() {
-  // RF-001: Usa o hook para salvar filtros no localStorage
-  const [filters, setFilters] = useLocalStorage('travelFilters', ESTADO_INICIAL_FILTROS);
+  // Estado para os filtros atuais (o que o usuário está digitando)
+  const [filters, setFilters] = useState(ESTADO_INICIAL_FILTROS);
   
+  // Estado para os filtros enviados (o que foi calculado)
+  // Começa como 'null' para sabermos que o usuário ainda não enviou
+  const [submittedFilters, setSubmittedFilters] = useState(null);
+  
+  // Estado para os resultados filtrados
   const [results, setResults] = useState([]);
-  const [costs, setCosts] = useState(CUSTO_INICIAL); 
+  // Estado para os custos calculados
+  const [costs, setCosts] = useState(CUSTO_INICIAL);
   const [loading, setLoading] = useState(false);
 
-  // Efeito para FILTRAR DESTINOS e CALCULAR CUSTOS
+  // Efeito que roda *apenas* quando 'submittedFilters' muda
   useEffect(() => {
+    // Só executa se o usuário tiver enviado o formulário
+    if (!submittedFilters) {
+      return;
+    }
+
     setLoading(true);
 
     // 1. Achatamos todos os destinos em uma única lista
     const allDestinations = Object.entries(jsonData.regiao_sudeste).flatMap(
       ([stateName, destinations]) => {
-        return destinations.map(dest => ({ ...dest, estado: stateName }));
+        return destinations.map((dest) => ({ ...dest, estado: stateName }));
       }
     );
 
     // 2. Aplicamos os filtros (MOTOR DE INFERÊNCIA - PARTE 1)
-    const filteredDestinations = allDestinations.filter(dest => {
-      
-      const stateMatch = filters.states.length === 0 || filters.states.includes(dest.estado);
+    const filteredDestinations = allDestinations.filter((dest) => {
+      // Regra de Filtro de Estado
+      const stateMatch =
+        submittedFilters.states.length === 0 ||
+        submittedFilters.states.includes(dest.estado);
 
-      const interestMatch = filters.interests.length === 0 || 
-        filters.interests.some(interest => {
+      // Regra de Filtro de Interesse
+      const interestMatch =
+        submittedFilters.interests.length === 0 ||
+        submittedFilters.interests.some((interest) => {
           const keywords = interestMapping[interest] || [];
-          // Adiciona verificação para 'dest.tipo'
-          return keywords.some(keyword => 
-            dest.tipo && dest.tipo.toLowerCase().includes(keyword.toLowerCase())
+          return keywords.some((keyword) =>
+            (dest.tipo || '').toLowerCase().includes(keyword.toLowerCase())
           );
         });
 
-      const companhiaMatch = 
-        filters.companhia === 'todos' ||
-        (dest.publico_ideal && dest.publico_ideal.includes('todos')) ||
-        (dest.publico_ideal && dest.publico_ideal.includes(filters.companhia));
+      // Regra de Filtro de Companhia
+      const companhiaMatch =
+        submittedFilters.companhia === 'todos' ||
+        (dest.publico_ideal || []).includes('todos') ||
+        (dest.publico_ideal || []).includes(submittedFilters.companhia);
 
       return stateMatch && interestMatch && companhiaMatch;
     });
 
     // 3. Chamar o Sistema Especialista (MOTOR DE INFERÊNCIA - PARTE 2)
-    const estimatedCosts = calcularCustosEstimados(filteredDestinations, filters);
+    const estimatedCosts = calcularCustosEstimados(
+      filteredDestinations,
+      submittedFilters
+    );
 
+    // Simula um pequeno delay de "cálculo"
     setTimeout(() => {
       setResults(filteredDestinations);
       setCosts(estimatedCosts);
       setLoading(false);
-    }, 300);
+    }, 500); // 500ms
+  }, [submittedFilters]); // Re-executa *apenas* quando um novo roteiro é enviado
 
-  }, [filters]); // Re-executa sempre que os filtros mudarem
+  // Função chamada pelo <form> do Quiz
+  const handleFormSubmit = (e) => {
+    e.preventDefault(); // Impede o recarregamento da página
+    
+    // Validação de Partida
+    if (filters.originState === 'sem_partida') {
+      alert("Por favor, selecione um Ponto de Partida para calcular os custos.");
+      return;
+    }
+    
+    // Copia os filtros atuais para o estado de "enviado", disparando o useEffect
+    setSubmittedFilters({ ...filters });
+  };
 
   return (
     <div className="App">
       <header>
-        <h1>Planejador de Viagens (Sudeste)</h1>
-        <p>Sistema Especialista com Cálculo de Custos</p>
+        <h1>Planejador de Viagens</h1>
+        <p>Sistema Especialista para seu roteiro no Sudeste</p>
       </header>
-      
       <main>
+        {/* A Sidebar (Formulário) */}
         <aside className="quiz-container">
-          <Quiz filters={filters} setFilters={setFilters} />
+          <Quiz
+            filters={filters}
+            setFilters={setFilters}
+            handleSubmit={handleFormSubmit}
+            estadoInicial={ESTADO_INICIAL_FILTROS}
+          />
         </aside>
+
+        {/* Os Resultados */}
         <section className="results-container">
-          <Resultados 
-            items={results} 
+          <Resultados
+            items={results}
             loading={loading}
-            costs={costs}       
-            quizData={filters}  
+            costs={costs}
+            quizData={submittedFilters} // Passa os filtros *enviados*
           />
         </section>
       </main>
 
-      {/* --- RODAPÉ ADICIONADO --- */}
+      {/* Rodapé */}
       <footer>
-        <p>Aplicação criada usando JavaScript, React JS e Vite</p>
-        <div className="logos">
-          <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer">
-            <img src="/vite.svg" className="logo" alt="Logo do Vite" />
-          </a>
-          <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            <img src={reactLogo} className="logo react" alt="Logo do React" />
-          </a>
+        <div className="footer-content">
+          <p>Aplicação criada usando JavaScript, React JS e Vite</p>
+          <div className="footer-logos">
+            <img src="/vite.svg" alt="Logo do Vite" />
+            <img src={reactLogo} className="logo-spin" alt="Logo do React" />
+          </div>
         </div>
       </footer>
-      {/* --- FIM DO RODAPÉ --- */}
     </div>
   );
 }

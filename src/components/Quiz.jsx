@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // Importa os hubs de partida que criamos
 import { ORIGIN_HUBS } from '../data/transporteData';
 
-// Interesses generalizados para o quiz (RF-010)
+// Interesses generalizados para o quiz
 const generalInterests = [
   'Praia/Litoral',
   'Ecoturismo/Aventura',
@@ -11,74 +11,75 @@ const generalInterests = [
   'Gastronomia',
   'Religioso',
   'Urbano/Lazer',
-  'Arte/Arquitetura'
+  'Arte/Arquitetura',
 ];
 
-// Estados disponíveis (RF-011)
-const states = ['Rio de Janeiro', 'São Paulo', 'Minas Gerais', 'Espírito Santo'];
+// Estados disponíveis
+const states = [
+  'Rio de Janeiro',
+  'São Paulo',
+  'Minas Gerais',
+  'Espírito Santo',
+];
 
 // Transforma o objeto ORIGIN_HUBS em um array para o <select>
-// Resultado: [ { key: 'SP', value: 'São Paulo (SP)' }, ... ]
 const originOptions = Object.entries(ORIGIN_HUBS).map(([key, value]) => ({
   key: key,
   value: value,
 }));
 
-
-function Quiz({ filters, setFilters }) {
-  
-  // Handler genérico para inputs simples (texto, número, data, select)
+function Quiz({ filters, setFilters, handleSubmit, estadoInicial }) {
+  // Handler genérico para inputs (texto, número, data, select)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
       ...prev,
-      [name]: value,
+      // Converte 'people' e 'duration' para número ao digitar
+      [name]:
+        name === 'people' || name === 'duration' ? parseInt(value, 10) : value,
     }));
   };
-  
-  // Função para atualizar os checkboxes de estado
-  const handleStateChange = (e) => {
-    const { name, checked } = e.target;
+
+  // Handler específico para os checkboxes (pílulas)
+  const handleCheckboxChange = (e) => {
+    const { name, value, checked } = e.target; // 'name' é o grupo (states/interests), 'value' é o item
     setFilters((prev) => {
-      const newStates = checked
-        ? [...prev.states, name]
-        : prev.states.filter((s) => s !== name);
-      return { ...prev, states: newStates };
+      const list = prev[name]; // Pega o array (ex: prev.states)
+      const newList = checked
+        ? [...list, value] // Adiciona o item se marcado
+        : list.filter((item) => item !== value); // Remove se desmarcado
+      return { ...prev, [name]: newList };
     });
   };
 
-  // Função para atualizar os checkboxes de interesse
-  const handleInterestChange = (e) => {
-    const { name, checked } = e.target;
-    setFilters((prev) => {
-      const newInterests = checked
-        ? [...prev.interests, name]
-        : prev.interests.filter((i) => i !== name);
-      return { ...prev, interests: newInterests };
-    });
-  };
-
-  // RF-002: Resetar filtros
+  // Reseta o formulário para o estado inicial padrão
   const handleReset = () => {
-    // Reseta para o estado inicial completo
-    setFilters({
-      states: [],
-      interests: [],
-      duration: 1,
-      people: 1,
-      budget: 'conforto',
-      startDate: new Date().toISOString().split('T')[0],
-      companhia: 'todos',
-      originState: 'sem_partida', // Reseta o novo campo
-    });
+    setFilters(estadoInicial);
   };
 
-  // Fragmento React (<>) para evitar a div duplicada
+  // Efeito que auto-corrige o perfil se "1 pessoa" for selecionado
+  useEffect(() => {
+    const numPessoas = parseInt(filters.people, 10);
+    const perfil = filters.companhia;
+
+    const perfisDeGrupo = ['casal', 'familia', 'amigos', 'religioso'];
+
+    if (numPessoas === 1 && perfisDeGrupo.includes(perfil)) {
+      setFilters((prev) => ({
+        ...prev,
+        companhia: 'sozinho', // Força o perfil para "sozinho"
+      }));
+    }
+  }, [filters.people, filters.companhia, setFilters]);
+
+  // Variável de controle para desabilitar opções
+  const isSinglePerson = parseInt(filters.people, 10) === 1;
+
   return (
-    <>
+    // O <form> agora controla o envio
+    <form onSubmit={handleSubmit}>
       <h3>1. Detalhes da Viagem</h3>
-      
-      {/* NOVO CAMPO: PONTO DE PARTIDA */}
+
       <div className="form-group">
         <label htmlFor="originState">Ponto de Partida (para custo)</label>
         <select
@@ -88,12 +89,14 @@ function Quiz({ filters, setFilters }) {
           onChange={handleChange}
         >
           <option value="sem_partida">-- Selecione sua origem --</option>
-          {originOptions.map(opt => (
-            <option key={opt.key} value={opt.key}>{opt.value}</option>
+          {originOptions.map((opt) => (
+            <option key={opt.key} value={opt.key}>
+              {opt.value}
+            </option>
           ))}
         </select>
       </div>
-      
+
       <div className="form-group">
         <label htmlFor="startDate">Data de Início (aprox.)</label>
         <input
@@ -102,30 +105,36 @@ function Quiz({ filters, setFilters }) {
           name="startDate"
           value={filters.startDate}
           onChange={handleChange}
+          min={new Date().toISOString().split('T')[0]} // Impede datas passadas
         />
       </div>
-      <div className="form-group">
-        <label htmlFor="duration">Duração (dias)</label>
-        <input
-          type="number"
-          id="duration"
-          name="duration"
-          min="1"
-          value={filters.duration}
-          onChange={handleChange}
-        />
+
+      {/* Layout de grid para Duração e Pessoas */}
+      <div className="form-grid-2">
+        <div className="form-group">
+          <label htmlFor="duration">Duração (dias)</label>
+          <input
+            type="number"
+            id="duration"
+            name="duration"
+            min="1"
+            value={filters.duration}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="people">Número de Pessoas</label>
+          <input
+            type="number"
+            id="people"
+            name="people"
+            min="1"
+            value={filters.people}
+            onChange={handleChange}
+          />
+        </div>
       </div>
-      <div className="form-group">
-        <label htmlFor="people">Número de Pessoas</label>
-        <input
-          type="number"
-          id="people"
-          name="people"
-          min="1"
-          value={filters.people}
-          onChange={handleChange}
-        />
-      </div>
+
       <div className="form-group">
         <label htmlFor="budget">Orçamento</label>
         <select
@@ -139,6 +148,7 @@ function Quiz({ filters, setFilters }) {
           <option value="luxo">Luxo (Premium)</option>
         </select>
       </div>
+
       <div className="form-group">
         <label htmlFor="companhia">Perfil da Companhia</label>
         <select
@@ -149,51 +159,67 @@ function Quiz({ filters, setFilters }) {
         >
           <option value="todos">Qualquer (Todos)</option>
           <option value="sozinho">Sozinho(a)</option>
-          <option value="casal">Casal</option>
-          <option value="familia">Família</option>
-          <option value="amigos">Amigos</option>
-          <option value="religioso">Religioso</option>
+          <option value="casal" disabled={isSinglePerson}>
+            Casal
+          </option>
+          <option value="familia" disabled={isSinglePerson}>
+            Família
+          </option>
+          <option value="amigos" disabled={isSinglePerson}>
+            Amigos
+          </option>
+          <option value="religioso" disabled={isSinglePerson}>
+            Religioso
+          </option>
         </select>
       </div>
 
-      <hr />
-
       <h3>2. Quais estados você quer visitar?</h3>
+      {/* CORREÇÃO DO BUG: O input é irmão do label, não filho */}
       <div className="filter-group">
         {states.map((state) => (
-          <label key={state}>
+          <React.Fragment key={state}>
             <input
               type="checkbox"
-              name={state}
+              id={`state-${state}`}
+              name="states" // Nome do grupo
+              value={state} // Valor específico
               checked={filters.states.includes(state)}
-              onChange={handleStateChange}
+              onChange={handleCheckboxChange}
             />
-            {state}
-          </label>
+            <label htmlFor={`state-${state}`}>{state}</label>
+          </React.Fragment>
         ))}
       </div>
-
-      <hr />
 
       <h3>3. Quais seus principais interesses?</h3>
+      {/* CORREÇÃO DO BUG: O input é irmão do label, não filho */}
       <div className="filter-group">
         {generalInterests.map((interest) => (
-          <label key={interest}>
+          <React.Fragment key={interest}>
             <input
               type="checkbox"
-              name={interest}
+              id={`interest-${interest}`}
+              name="interests" // Nome do grupo
+              value={interest} // Valor específico
               checked={filters.interests.includes(interest)}
-              onChange={handleInterestChange}
+              onChange={handleCheckboxChange}
             />
-            {interest}
-          </label>
+            <label htmlFor={`interest-${interest}`}>{interest}</label>
+          </React.Fragment>
         ))}
       </div>
 
-      <button onClick={handleReset} className="reset-button">
-        Limpar Filtros
-      </button>
-    </>
+      {/* Botões de Ação do Formulário */}
+      <div className="form-actions">
+        <button type="submit" className="submit-button">
+          Gerar Roteiro
+        </button>
+        <button type="button" onClick={handleReset} className="reset-button">
+          Limpar
+        </button>
+      </div>
+    </form>
   );
 }
 

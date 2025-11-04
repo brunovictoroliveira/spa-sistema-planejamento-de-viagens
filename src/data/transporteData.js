@@ -1,5 +1,6 @@
 // Esta é a nossa base de conhecimento "fictícia" para custos de transporte.
 // Simula o custo (ida e volta) de uma passagem (aérea/ônibus) entre as capitais.
+// ATUALIZADO para refletir os custos aproximados do final de 2024 / início de 2025.
 
 // Mapeamento dos estados para seus "hubs" (capitais/aeroportos principais)
 export const ORIGIN_HUBS = {
@@ -9,31 +10,32 @@ export const ORIGIN_HUBS = {
   ES: "Vitória (ES)",
 };
 
-// Matriz de custo simulado (ex: SP -> RJ custa R$ 300 ida e volta)
+// Matriz de custo simulado (ex: SP -> RJ custa R$ 400 ida e volta)
 // Usamos uma matriz simétrica (ida = volta) para simplificar
 export const COST_MATRIX = {
   SP: {
     SP: 0,
-    RJ: 300, // SP <-> RJ
-    MG: 400, // SP <-> MG
-    ES: 650, // SP <-> ES
+    RJ: 400, // SP <-> RJ
+    MG: 500, // SP <-> MG
+    ES: 750, // SP <-> ES
   },
   RJ: {
-    SP: 300,
+    SP: 400,
     RJ: 0,
-    MG: 350, // RJ <-> MG
-    ES: 500, // RJ <-> ES
+    MG: 450, // RJ <-> MG
+    ES: 600, // RJ <-> ES
   },
   MG: {
-    SP: 400,
+    SP: 500,
     MG: 0,
-    RJ: 350,
-    ES: 600, // MG <-> ES
+    RJ: 450,
+    ES: 700, // MG <-> ES
   },
   ES: {
-    SP: 650,
-    RJ: 500,
-    MG: 600,
+    SP: 750,
+    RJ: 600,
+    MG: 700,
     ES: 0,
   },
 };
+
